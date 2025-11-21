@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-// Here will be a middleware to protect routes
+const protect = require('../middlewares/protectMiddleware');
 const { 
     registerUser ,
     loginUser,

@@ -8,7 +8,7 @@ const cookieOptions = {
     secure: process.env.NODE_ENV === 'production',
     sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict',
     maxAge: 30 * 24 * 60 * 60 * 1000
-}
+};
 
 // Register User
 async function registerUser(req, res) {
