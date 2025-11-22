@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const googleAuthRoutes = require('./routes/googleAuthRoutes');
 
 // Setting up environment variables
 require('dotenv').config();
@@ -13,6 +14,9 @@ const PORT = process.env.PORT || 1212;
 // Connect to database
 connectDB();
 
+// Passport configuration
+require('./config/passport');
+
 // Middleware setup
 app.use(cors({
     origin: process.env.CLIENT_URL,
@@ -20,6 +24,8 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
+// Routes
+app.use('/api/auth/google', googleAuthRoutes);
 app.use('/api/auth', userRoutes);
 
 // Sample route
