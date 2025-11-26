@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const googleAuthRoutes = require('./routes/googleAuthRoutes');
+const travelRoutes = require('./routes/travelRoutes');
 
 // Setting up environment variables
 require('dotenv').config();
@@ -27,6 +28,7 @@ app.use(cookieParser());
 // Routes
 app.use('/api/auth/google', googleAuthRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/travels', travelRoutes);
 
 // Sample route
 app.get('/', (req, res) => {
