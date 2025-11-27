@@ -1,8 +1,18 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import HomePage from '../pages/HomePage'
 import AuthPage from '../pages/AuthPage'
+import { getCurrentUser } from "../store/slices/authSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 function AppRouter() {
+  const dispatch = useDispatch();
+
+  // on component mount, get current user
+  useEffect(() => {
+    dispatch(getCurrentUser());
+  }, [dispatch]);
+
   return (
     <Router>
         <Routes>
