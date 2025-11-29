@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 import { handleAuth } from "../store/slices/authSlice";
 
 import AuthForm from "../components/AuthForm";
