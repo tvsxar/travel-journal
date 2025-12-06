@@ -3,12 +3,14 @@ import Footer from "../components/Footer.jsx"
 import TravelsList from "../components/TravelsList.jsx"
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from "../store/slices/authSlice.js";
+import { editTravel } from "../store/slices/travelSlice.js";
 import { Navigate } from 'react-router-dom';
 import { useEffect } from "react";
 
 function HomePage() {
   const dispatch = useDispatch();
-  const { user, userLoading} = useSelector(state => state.auth);
+  const { user, userLoading } = useSelector(state => state.auth);
+  const { travels, travelLoading, travelError } = useSelector(state => state.travel);
 
   useEffect(() => {
     console.log(user)
@@ -36,11 +38,15 @@ function HomePage() {
   }
 
   return (
-    <div>
+    <div className="min-h-screen">
       <Navbar
       handleLogout={handleLogout} />
 
-      <TravelsList />
+      <TravelsList
+      travels={travels}
+      travelLoading={travelLoading}
+      travelError={travelError}
+      editTravel={editTravel} />
 
       <Footer />
     </div>
