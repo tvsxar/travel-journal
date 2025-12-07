@@ -83,7 +83,7 @@ async function updateTravelById(req, res) {
         travel.title = title || travel.title;
         travel.story = story || travel.story;
         travel.visitedLocation = visitedLocation || travel.visitedLocation;
-        travel.visitedDate = visitedDate ? new Date(parseInt(visitedDate)) : travel.visitedDate;
+        travel.visitedDate = visitedDate ? new Date(visitedDate) : travel.visitedDate;
         travel.isFavourite = travel.isFavourite === isFavourite ? travel.isFavourite : isFavourite;
 
         await travel.save();
