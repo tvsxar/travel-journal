@@ -22,7 +22,7 @@ async function createTravel(req, res) {
             visitedLocation,
             userId: req.user._id,
             imageUrl: image.secure_url,
-            visitedDate: new Date(parseInt(visitedDate))
+            visitedDate: new Date(visitedDate)
         })
 
         res.status(201).json({ message: 'Travel story created successfully', travel: newTravel });
