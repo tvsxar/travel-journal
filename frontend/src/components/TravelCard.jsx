@@ -35,7 +35,7 @@ function TravelCard({ travel }) {
 
         <div className="flex flex-wrap gap-2">
           {travel.visitedLocation.map((loc) => (
-            <div className="inline-flex items-center gap-1 bg-cyan-100 py-1 px-2 rounded-md w-max">
+            <div key={loc} className="inline-flex items-center gap-1 bg-cyan-100 py-1 px-2 rounded-md w-max">
               <img className="w-5 h-auto" src={locationIcon} alt="locationIcon" />
 
               <p className="text-sm text-cyan-600">{loc}</p>

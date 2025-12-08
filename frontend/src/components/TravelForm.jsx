@@ -45,6 +45,8 @@ function TravelForm({travelData, handleInput, handleSubmit, isEditing, travelErr
         {isEditing ? "Edit Travel Story" : "Add Travel Story"}
       </h2>
 
+      {travelError && <p className="text-lg font-sm text-red-600 mb-4">{travelError}</p>}
+
       <form onSubmit={handleSubmit}
       className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Title */}
@@ -126,7 +128,7 @@ function TravelForm({travelData, handleInput, handleSubmit, isEditing, travelErr
           type="file" 
           accept="image/*" 
           className="hidden" 
-          required
+          required={!isEditing}
           ref={fileInputRef}
           onChange={handleInput} />
         </div>

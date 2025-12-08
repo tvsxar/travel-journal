@@ -1,27 +1,33 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import TravelForm from "../components/TravelForm";
-import { createTravel, editTravel, fetchTravelById } from "../store/slices/travelSlice.js";
-import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import {
+  createTravel,
+  editTravel,
+  fetchTravelById,
+} from "../store/slices/travelSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 function TravelFormPage() {
   const dispatch = useDispatch();
-  const { currentTravel, travelLoading, travelError } = useSelector(state => state.travel);
+  const { currentTravel, travelLoading, travelError } = useSelector(
+    (state) => state.travel
+  );
   const navigate = useNavigate();
 
   const { id } = useParams();
   const isEditing = Boolean(id);
 
   const [travelData, setTravelData] = useState({
-    title: '',
-    story: '',
-    visitedLocation: [],
+    title: "",
+    story: "",
+    visitedLocation: "",
     isFavourite: false,
-    visitedDate: '',
-    image: null
-  })
+    visitedDate: "",
+    image: null,
+  });
 
   // Submit handler
   function handleSubmit(e) {
@@ -29,21 +35,28 @@ function TravelFormPage() {
 
     // Create formData obj to send to API
     const formData = new FormData();
-    formData.append('title', travelData.title);
-    formData.append('story', travelData.story);
-    formData.append('visitedLocation', JSON.stringify(travelData.visitedLocation));
-    formData.append('isFavourite', travelData.isFavourite);
-    formData.append('visitedDate', travelData.visitedDate);
-    formData.append('image', travelData.image);
+    formData.append("title", travelData.title);
+    formData.append("story", travelData.story);
+    formData.append("isFavourite", travelData.isFavourite);
+    formData.append("visitedDate", travelData.visitedDate);
+    formData.append("image", travelData.image);
 
-    if(isEditing) {
-      dispatch(editTravel({travelId: id, travelData: formData}))
+    const locationsArray = travelData.visitedLocation
+      .split(",")
+      .map((loc) => loc.trim());
+
+    locationsArray.forEach((loc) => {
+      formData.append("visitedLocation", loc);
+    });
+
+    if (isEditing) {
+      dispatch(editTravel({ travelId: id, travelData: formData }))
         .unwrap()
-        .then(res => navigate('/travel/' + res._id));
+        .then((res) => navigate("/travel/" + res._id));
     } else {
-      dispatch(createTravel({travelData: formData}))
+      dispatch(createTravel(formData))
         .unwrap()
-        .then(res => navigate('/travel/' + res._id));
+        .then((res) => navigate("/travel/" + res._id));
     }
   }
 
@@ -51,31 +64,29 @@ function TravelFormPage() {
   function handleInput(e) {
     const { value, files, name } = e.target;
 
-    setTravelData(prev => ({
+    setTravelData((prev) => ({
       ...prev,
-      [name]: files ? files[0] : value
-    }))
+      [name]: files ? files[0] : value,
+    }));
   }
 
   // Load travel if in editing mode
   useEffect(() => {
-    if(isEditing) {
-      if(!currentTravel || currentTravel._id !== id) {
+    if (isEditing) {
+      if (!currentTravel || currentTravel._id !== id) {
         dispatch(fetchTravelById(id));
       } else {
         setTravelData({
-        title: currentTravel.title,
-        story: currentTravel.story,
-        visitedLocation: currentTravel.visitedLocation,
-        isFavourite: currentTravel.isFavourite,
-        visitedDate: currentTravel.visitedDate,
-        image: null
-      })
+          title: currentTravel.title,
+          story: currentTravel.story,
+          visitedLocation: currentTravel.visitedLocation,
+          isFavourite: currentTravel.isFavourite,
+          visitedDate: currentTravel.visitedDate,
+          image: null,
+        });
       }
-
-      
     }
-  }, [id, dispatch, isEditing, currentTravel])
+  }, [id, dispatch, isEditing, currentTravel]);
 
   // if travelLoading, show loading indicator
   if (travelLoading) {
@@ -94,12 +105,12 @@ function TravelFormPage() {
       <Navbar />
 
       <TravelForm
-      travelError={travelError}
-      travelData={travelData}
-      handleInput={handleInput}
-      handleSubmit={handleSubmit}
-      isEditing={isEditing}
-      setTravelData={setTravelData}
+        travelError={travelError}
+        travelData={travelData}
+        handleInput={handleInput}
+        handleSubmit={handleSubmit}
+        isEditing={isEditing}
+        setTravelData={setTravelData}
       />
 
       <Footer />
