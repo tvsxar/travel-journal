@@ -1,26 +1,26 @@
-import Navbar from "../components/Navbar.jsx"
-import Footer from "../components/Footer.jsx"
-import TravelsList from "../components/TravelsList.jsx"
-import { useDispatch, useSelector } from 'react-redux';
+import Navbar from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx";
+import TravelsList from "../components/TravelsList.jsx";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../store/slices/authSlice.js";
 import { editTravel, fetchTravels } from "../store/slices/travelSlice.js";
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 import { useEffect } from "react";
 
 function HomePage() {
   const dispatch = useDispatch();
-  const { user, userLoading } = useSelector(state => state.auth);
-  const { travels, travelLoading, travelError } = useSelector(state => state.travel);
+  const { user, userLoading } = useSelector((state) => state.auth);
+  const { travels, travelLoading, travelError } = useSelector(
+    (state) => state.travel
+  );
 
   useEffect(() => {
-    dispatch(fetchTravels())
-  }, [dispatch])
+    dispatch(fetchTravels());
+  }, [dispatch]);
 
   function handleLogout() {
-    dispatch(logoutUser())
+    dispatch(logoutUser());
   }
-
-
 
   // if userLoading, show loading indicator
   if (userLoading) {
@@ -46,7 +46,9 @@ function HomePage() {
         className="mx-auto flex min-h-screen items-center 
       justify-center p-4"
       >
-        <p className="text-xl font-semibold text-gray-600">Loading travels...</p>
+        <p className="text-xl font-semibold text-gray-600">
+          Loading travels...
+        </p>
       </div>
     );
   }
@@ -58,7 +60,9 @@ function HomePage() {
         className="mx-auto flex min-h-screen items-center 
       justify-center p-4"
       >
-        <p className="text-xl font-semibold text-red-600">Error: {travelError}</p>
+        <p className="text-xl font-semibold text-red-600">
+          Error: {travelError}
+        </p>
       </div>
     );
   }
@@ -67,30 +71,27 @@ function HomePage() {
   if (!travels || travels.length === 0) {
     return (
       <div className="mx-auto flex min-h-screen items-center justify-center p-4">
-        <p className="text-xl font-semibold text-gray-500">
-          No travels found.
-        </p>
+        <p className="text-xl font-semibold text-gray-500">No travels found.</p>
       </div>
     );
   }
 
-  
-
-
   return (
-    <div className="min-h-screen">
-      <Navbar
-      handleLogout={handleLogout} />
+    <div className="min-h-screen flex flex-col">
+      <Navbar handleLogout={handleLogout} />
 
-      <TravelsList
-      travels={travels}
-      travelLoading={travelLoading}
-      travelError={travelError}
-      editTravel={editTravel} />
+      <div className="flex-1">
+        <TravelsList
+          travels={travels}
+          travelLoading={travelLoading}
+          travelError={travelError}
+          editTravel={editTravel}
+        />
+      </div>
 
       <Footer />
     </div>
-  )
+  );
 }
 
-export default HomePage
+export default HomePage;

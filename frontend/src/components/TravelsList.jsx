@@ -1,42 +1,6 @@
 import TravelCard from "./TravelCard";
 
-function TravelsList({travels, travelError, travelLoading, editTravel}) {
-
-  // if travelLoading, show loading indicator
-  if (travelLoading) {
-    return (
-      <div
-        className="mx-auto flex min-h-screen items-center 
-      justify-center p-4"
-      >
-        <p className="text-xl font-semibold text-gray-600">Loading...</p>
-      </div>
-    );
-  }
-
-  // if travelError, show loading indicator
-  if (travelError) {
-    return (
-      <div
-        className="mx-auto flex min-h-screen items-center 
-      justify-center p-4"
-      >
-        <p className="text-xl font-semibold text-red-600">Error, please try again.</p>
-      </div>
-    );
-  }
-
-  // if no travels yet
-  if (!travels || travels.length === 0) {
-    return (
-      <div className="mx-auto flex min-h-screen items-center justify-center p-4">
-        <p className="text-xl font-semibold text-gray-500">
-          No travels found.
-        </p>
-      </div>
-    );
-  }
-
+function TravelsList({travels}) {
   return (
     <div
       className="py-12 px-4 sm:px-12 lg:px-25
