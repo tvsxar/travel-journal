@@ -39,7 +39,9 @@ function TravelFormPage() {
     formData.append("story", travelData.story);
     formData.append("isFavourite", travelData.isFavourite);
     formData.append("visitedDate", travelData.visitedDate);
-    formData.append("image", travelData.image);
+    if (travelData.image) {
+      formData.append("image", travelData.image);
+    }
 
     const locationsArray = travelData.visitedLocation
       .split(",")

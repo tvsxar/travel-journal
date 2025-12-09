@@ -1,7 +1,14 @@
-import { useNavigate } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
 
-function TravelForm({travelData, handleInput, handleSubmit, isEditing, travelError, setTravelData}) {
+function TravelForm({
+  travelData,
+  handleInput,
+  handleSubmit,
+  isEditing,
+  travelError,
+  setTravelData,
+}) {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -20,12 +27,12 @@ function TravelForm({travelData, handleInput, handleSubmit, isEditing, travelErr
     setIsDragging(false);
 
     const droppedFile = e.dataTransfer.files[0];
-    
-    if(droppedFile) {
-      setTravelData(prev => ({
+
+    if (droppedFile) {
+      setTravelData((prev) => ({
         ...prev,
-        image: droppedFile
-      }))
+        image: droppedFile,
+      }));
     }
   }
 
@@ -35,9 +42,11 @@ function TravelForm({travelData, handleInput, handleSubmit, isEditing, travelErr
 
   return (
     <div className="flex-1 py-12 px-4 sm:px-12 lg:px-25">
-      <button onClick={() => navigate(-1)} 
-      className="mb-8 text-gray-600 hover:text-gray-900 text-sm font-medium 
-      inline-flex items-center gap-2 cursor-pointer">
+      <button
+        onClick={() => navigate(-1)}
+        className="mb-8 text-gray-600 hover:text-gray-900 text-sm font-medium 
+      inline-flex items-center gap-2 cursor-pointer"
+      >
         <span className="text-xl">←</span> Back
       </button>
 
@@ -45,17 +54,21 @@ function TravelForm({travelData, handleInput, handleSubmit, isEditing, travelErr
         {isEditing ? "Edit Travel Story" : "Add Travel Story"}
       </h2>
 
-      {travelError && <p className="text-lg font-sm text-red-600 mb-4">{travelError}</p>}
+      {travelError && (
+        <p className="text-lg font-sm text-red-600 mb-4">{travelError}</p>
+      )}
 
-      <form onSubmit={handleSubmit}
-      className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+      >
         {/* Title */}
         <div className="flex flex-col gap-2">
           <label className="font-medium text-sm text-gray-700">Title</label>
           <input
             placeholder="Trip to France"
             value={travelData.title}
-            name='title'
+            name="title"
             onChange={handleInput}
             className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-cyan-400 outline-none"
             required
@@ -67,7 +80,7 @@ function TravelForm({travelData, handleInput, handleSubmit, isEditing, travelErr
           <label className="font-medium text-sm text-gray-700">Date</label>
           <input
             type="date"
-            name='visitedDate'
+            name="visitedDate"
             value={travelData.visitedDate}
             onChange={handleInput}
             className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-cyan-400 outline-none"
@@ -80,7 +93,7 @@ function TravelForm({travelData, handleInput, handleSubmit, isEditing, travelErr
           <label className="font-medium text-sm text-gray-700">Place</label>
           <input
             placeholder="Paris, Marseille, Strasbourg, etc."
-            name='visitedLocation'
+            name="visitedLocation"
             value={travelData.visitedLocation}
             onChange={handleInput}
             className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-cyan-400 outline-none"
@@ -90,13 +103,11 @@ function TravelForm({travelData, handleInput, handleSubmit, isEditing, travelErr
 
         {/* Story */}
         <div className="flex flex-col gap-2 lg:col-span-2">
-          <label className="font-medium text-sm text-gray-700">
-            Story
-          </label>
+          <label className="font-medium text-sm text-gray-700">Story</label>
           <textarea
             rows="6"
             placeholder="Share your experience…"
-            name='story'
+            name="story"
             value={travelData.story}
             onChange={handleInput}
             className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-cyan-400 outline-none resize-none"
@@ -116,21 +127,30 @@ function TravelForm({travelData, handleInput, handleSubmit, isEditing, travelErr
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             className={`border-2 border-dashed rounded-xl p-10 text-center transition cursor-pointer
-            ${isDragging ? "border-cyan-400 bg-cyan-50" : "border-gray-300 hover:border-cyan-400"}`}
+            ${
+              isDragging
+                ? "border-cyan-400 bg-cyan-50"
+                : "border-gray-300 hover:border-cyan-400"
+            }`}
           >
             <p className="text-gray-500">
-              {travelData.image ? "1 file selected" : "Drag & Drop or Click to Upload Photo"}
+              {travelData.image
+                ? "1 file selected"
+                : isEditing
+                ? "Current photo — click to change"
+                : "Drag & Drop or Click to Upload Photo"}
             </p>
           </div>
 
-          <input 
-          name="image" 
-          type="file" 
-          accept="image/*" 
-          className="hidden" 
-          required={!isEditing}
-          ref={fileInputRef}
-          onChange={handleInput} />
+          <input
+            name="image"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            required={!isEditing}
+            ref={fileInputRef}
+            onChange={handleInput}
+          />
         </div>
 
         {/* Submit */}
