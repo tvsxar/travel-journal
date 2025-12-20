@@ -31,7 +31,7 @@ function TravelCard({ travel }) {
           <p className="text-gray-400 text-xs">{formatDate(travel.visitedDate)}</p>
         </div>
 
-        <p className="text-sm text-gray-700 line-clamp-3">{travel.story}</p>
+        <p className="text-sm text-gray-700 line-clamp-2">{travel.story}</p>
 
         <div className="flex flex-wrap gap-2">
           {travel.visitedLocation.map((loc) => (
