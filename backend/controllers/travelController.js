@@ -35,7 +35,7 @@ async function createTravel(req, res) {
 // Get all travel stories for user
 async function getTravelsByUser(req, res) {
     try {
-        const travels = await Travel.find({ userId: req.user._id }).sort({ createdAt: -1 });
+        const travels = await Travel.find({ userId: req.user._id }).sort({ isFavourite: -1,createdAt: -1 });
 
         res.status(200).json({ message: 'Travels fetched successfully', travels });
     } catch (error) {
