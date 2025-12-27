@@ -81,9 +81,13 @@ function TravelFormPage() {
         setTravelData({
           title: currentTravel.title,
           story: currentTravel.story,
-          visitedLocation: currentTravel.visitedLocation,
+          visitedLocation: Array.isArray(currentTravel.visitedLocation)
+            ? currentTravel.visitedLocation.join(", ")
+            : currentTravel.visitedLocation,
           isFavourite: currentTravel.isFavourite,
-          visitedDate: currentTravel.visitedDate,
+          visitedDate: currentTravel.visitedDate
+            ? currentTravel.visitedDate.slice(0, 10)
+            : "",
           image: null,
         });
       }
