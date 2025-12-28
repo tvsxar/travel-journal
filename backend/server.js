@@ -30,10 +30,18 @@ app.use('/api/auth/google', googleAuthRoutes);
 app.use('/api/auth', userRoutes);
 app.use('/api/travels', travelRoutes);
 
-// Sample route
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+  app.get('/{*splat}', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../frontend', 'dist', 'index.html'));
+  })
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running....');
+  })
+}
 
 // Starting the server
 app.listen(PORT, () => {
